@@ -15,7 +15,7 @@ const TopNavBar = ({logout}) => {
     return (
         <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
             <Navbar.Brand>
-                <LinkContainer to="/">
+                <LinkContainer to="/jdmcserver-frontend/">
                     <img src={logo} className="nav-logo" alt="logo" />
                 </LinkContainer>
             </Navbar.Brand>
@@ -24,11 +24,11 @@ const TopNavBar = ({logout}) => {
 
             <Navbar.Collapse id="responsive-navbar-nav">
                 <Nav className="mr-auto">
-                    <LinkContainer to="/Server">
+                    <LinkContainer to="/jdmcserver-frontend/Server">
                         <Nav.Link>Server</Nav.Link>
                     </LinkContainer>
 
-                    <LinkContainer to="/Settings">
+                    <LinkContainer to="/jdmcserver-frontend/Settings">
                         <Nav.Link>Settings</Nav.Link>
                     </LinkContainer>
                 </Nav>
