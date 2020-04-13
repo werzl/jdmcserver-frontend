@@ -1,11 +1,15 @@
 import React, { useState, useCallback } from "react";
-import logo from "./logo.jpg";
-import "./App.css";
 
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { Row, Col, Form, Button } from "react-bootstrap";
 import "admin-lte/dist/css/adminlte.min.css";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
+import logo from "./logo.jpg";
+import "./App.css";
+import GetServerStatusAjaxHelper from "./components/helpers/GetServerStatusAjaxHelper";
 import TopNavBar from "./components/TopNavBar/TopNavBar";
 import ServerPage from "./pages/ServerPage";
 
@@ -15,11 +19,26 @@ const App = () => {
 
     const confirmApiKey = (e) => {
         e.preventDefault();
-        console.info("confirmApiKey invoked.");
+        getServerStatus();
+    };
+
+    const getServerStatus = useCallback(async () => {
+        await GetServerStatusAjaxHelper.get(apiKey)
+            .then(() => {
+                setApiKeyConfirmed(true);
+            }).catch(() => {
+                toast.error("API Key Invalid.", { autoClose: 2500, hideProgressBar: true });
+            });
+    }, [apiKey, setApiKeyConfirmed]);
+
+    const logout = () => {
+        setApiKey("");
+        setApiKeyConfirmed(false);
     };
 
     return (
         <>
+            <ToastContainer />
 
             {!apiKeyConfirmed &&
                 <>
@@ -32,7 +51,7 @@ const App = () => {
                         <Form className="w-25 mt-3 text-center">
                             <Form.Group>
                                 <Form.Label>Enter an API Key</Form.Label>
-                                <Form.Control type="password" placeholder="API-Key" onChange={e => setApiKey(e.target.value)}/>
+                                <Form.Control type="password" placeholder="API-Key" onChange={e => setApiKey(e.target.value)} />
                             </Form.Group>
                             <Button variant="outline-primary" type="submit" onClick={e => confirmApiKey(e)}>
                                 Submit
@@ -46,7 +65,7 @@ const App = () => {
                 <Router>
                     <Row>
                         <Col>
-                            <TopNavBar />
+                            <TopNavBar logout={logout}/>
                         </Col>
                     </Row>
 
@@ -68,7 +87,7 @@ const App = () => {
                                 </Route>
 
                                 <Route path="/Server">
-                                    <ServerPage />
+                                    <ServerPage apiKey={apiKey}/>
                                 </Route>
 
                                 <Route path="/Settings">

@@ -11,7 +11,7 @@ import "./TopNavBar.css";
 
 //import styles from "admin-lte/dist/js/adminlte";
 
-const TopNavBar = () => {
+const TopNavBar = ({logout}) => {
     return (
         <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
             <Navbar.Brand>
@@ -34,7 +34,7 @@ const TopNavBar = () => {
                 </Nav>
 
                 <Nav>
-                    <Nav.Link><FontAwesomeIcon icon={faSignOutAlt} /> Logout</Nav.Link>
+                    <Nav.Link onClick={logout}><FontAwesomeIcon icon={faSignOutAlt} /> Logout</Nav.Link>
                 </Nav>
             </Navbar.Collapse>
         </Navbar>
