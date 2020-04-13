@@ -3,7 +3,7 @@ import React, { useState, useCallback } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { HashRouter as Router, Switch, Route } from "react-router-dom";
 import { Row, Col, Form, Button } from "react-bootstrap";
 import "admin-lte/dist/css/adminlte.min.css";
 
@@ -62,7 +62,7 @@ const App = () => {
             }
 
             {apiKeyConfirmed &&
-                <Router>
+                <Router basename="/jdmcserver-frontend/">
                     <Row>
                         <Col>
                             <TopNavBar logout={logout}/>
@@ -72,7 +72,7 @@ const App = () => {
                     <Row>
                         <Col>
                             <Switch>
-                                <Route exact path="/jdmcserver-frontend/">
+                                <Route path="//">
                                     <header className="App-header">
                                         <img src={logo} className="App-logo" alt="logo" />
                                         <p>
@@ -86,11 +86,11 @@ const App = () => {
                                     </header>
                                 </Route>
 
-                                <Route path="/jdmcserver-frontend/Server">
+                                <Route path="/Server/">
                                     <ServerPage apiKey={apiKey}/>
                                 </Route>
 
-                                <Route path="/jdmcserver-frontend/Settings">
+                                <Route path="/Settings/">
                                     <Row>
                                         <Col>
                                             <div className="inner-content">

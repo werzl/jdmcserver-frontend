@@ -3,14 +3,19 @@ import { Row, Col } from "react-bootstrap";
 
 import * as ServerStatus from "../helpers/ServerStatus";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+import { faSpinner, faRedoAlt } from "@fortawesome/free-solid-svg-icons";
 
 import "./Server.css";
 
-const Server = ({ serverStatus }) => {
+const Server = ({ serverStatus, getServerStatus, startServer, stopServer }) => {
 
-    const toggleServer = (event) => {
-        console.info("toggleServer invoked.", event.target.checked);
+    const toggleServer = () => {
+        if (serverStatus === ServerStatus.STOPPED) {
+            startServer();
+        }
+        if (serverStatus === ServerStatus.RUNNING) {
+            stopServer();
+        }
     };
 
     return (
@@ -20,22 +25,24 @@ const Server = ({ serverStatus }) => {
 
                     <h1>
                         Jdmcserver status: {serverStatus === ServerStatus.PENDING && <FontAwesomeIcon icon={faSpinner} spin />}
-                        {serverStatus !== ServerStatus.PENDING && <>{serverStatus}</>}
-
+                        {serverStatus !== ServerStatus.PENDING &&
+                            <>
+                                {serverStatus}
+                                <FontAwesomeIcon className="refresh-icon" icon={faRedoAlt} onClick={getServerStatus} />
+                            </>
+                        }
                     </h1>
 
                     {serverStatus !== ServerStatus.PENDING &&
-                        <Row className="mt-3">
+                        <Row className="mt-5">
                             <Col md="3">
-                                <p>Enable/Disable Server</p>
+                                <p>Launch/Stop Server</p>
                             </Col>
 
                             <Col>
                                 <label className="switch">
-                                    <input type="checkbox" checked={serverStatus === ServerStatus.RUNNING} onClick={e => toggleServer(e)} />
-                                    <span className="slider round">
-                                        <p className="mt-5">I don't do anything yet</p>
-                                    </span>
+                                    <input type="checkbox" checked={serverStatus === ServerStatus.RUNNING} onClick={toggleServer} readOnly/>
+                                    <span className="slider round"></span>
                                 </label>
                             </Col>
                         </Row>
