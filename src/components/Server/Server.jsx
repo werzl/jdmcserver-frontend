@@ -33,7 +33,9 @@ const Server = ({ serverStatus }) => {
                             <Col>
                                 <label className="switch">
                                     <input type="checkbox" checked={serverStatus === ServerStatus.RUNNING} onClick={e => toggleServer(e)} />
-                                    <span className="slider round"></span>
+                                    <span className="slider round">
+                                        <p className="mt-5">I don't do anything yet</p>
+                                    </span>
                                 </label>
                             </Col>
                         </Row>

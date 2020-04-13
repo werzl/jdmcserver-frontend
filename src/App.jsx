@@ -72,7 +72,7 @@ const App = () => {
                     <Row>
                         <Col>
                             <Switch>
-                                <Route exact path="/">
+                                <Route exact path="/jdmcserver-frontend/">
                                     <header className="App-header">
                                         <img src={logo} className="App-logo" alt="logo" />
                                         <p>
@@ -86,11 +86,11 @@ const App = () => {
                                     </header>
                                 </Route>
 
-                                <Route path="/Server">
+                                <Route path="/jdmcserver-frontend/Server">
                                     <ServerPage apiKey={apiKey}/>
                                 </Route>
 
-                                <Route path="/Settings">
+                                <Route path="/jdmcserver-frontend/Settings">
                                     <Row>
                                         <Col>
                                             <div className="inner-content">
