@@ -9,7 +9,7 @@ import "admin-lte/dist/css/adminlte.min.css";
 
 import logo from "./logo.jpg";
 import "./App.css";
-import GetServerStatusAjaxHelper from "./components/helpers/GetServerStatusAjaxHelper";
+import GetServerStatusAjaxHelper from "./components/helpers/ServerAPI/GetServerStatusAjaxHelper";
 import TopNavBar from "./components/TopNavBar/TopNavBar";
 import ServerPage from "./pages/ServerPage";
 
