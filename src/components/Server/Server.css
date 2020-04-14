@@ -1,8 +1,8 @@
 .switch {
     position: relative;
     display: inline-block;
-    width: 60px;
-    height: 34px;
+    width: 52px;
+    height: 23px;
 }
 
 .switch input {
@@ -26,9 +26,9 @@
 .slider:before {
     position: absolute;
     content: "";
-    height: 26px;
-    width: 26px;
-    left: 4px;
+    height: 16px;
+    width: 16px;
+    left: 6px;
     bottom: 4px;
     background-color: white;
     -webkit-transition: .4s;
@@ -62,4 +62,42 @@ input:checked+.slider:before {
     margin-left: 2rem;
     color: green;
     cursor: pointer;
+}
+
+.server-details-content {
+    max-width: 600px;
+}
+
+.launch-cell { 
+    max-width: 30px;
+}
+
+/* Portrait */
+@media only screen and (min-device-width: 375px) and (max-device-width: 812px) and (-webkit-min-device-pixel-ratio: 3) and (orientation: portrait) {
+    .refresh-icon {
+        padding-top: 10px;
+    }
+
+    .switch {
+        margin-top: 10px;
+    }
+
+    .launch-cell {
+        max-width: 60px;
+    }
+}
+
+/* Landscape */
+@media only screen and (min-device-width: 375px) and (max-device-width: 812px) and (-webkit-min-device-pixel-ratio: 3) and (orientation: landscape) {
+    .refresh-icon {
+        padding-top: 10px;
+    }
+
+    .switch {
+        margin-top: 10px;
+    }
+
+    .launch-cell {
+        max-width: 60px;
+    }
 }
