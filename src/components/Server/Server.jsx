@@ -8,6 +8,7 @@ import { faSpinner, faRedoAlt } from "@fortawesome/free-solid-svg-icons";
 import "./Server.css";
 
 const Server = ({ serverStatus, getServerStatus, startServer, stopServer, serverDetails }) => {
+    const [loading, setLoading] = useState(true);
     const [timeRunning, setTimeRunning] = useState("");
     const [serverStartTime, setServerStartTime] = useState("");
     const timer = useRef(null);
@@ -28,11 +29,14 @@ const Server = ({ serverStatus, getServerStatus, startServer, stopServer, server
 
         setServerStartTime(startTime.toGMTString());
         setTimeRunning(new Date(diff).toLocaleTimeString());
-    }, [setServerStartTime, setTimeRunning, serverDetails]);
+        setLoading(false);
+    }, [setServerStartTime, setTimeRunning, serverDetails, setLoading]);
 
     useEffect(() => {
+        setLoading(true);
+
         if (serverStatus === ServerStatus.RUNNING) {
-            timer.current = setInterval(async () => await updateTimeRunning(), 1000);
+            timer.current = setInterval(() => updateTimeRunning(), 1000);
         }
         else {
             clearInterval(timer.current);
@@ -41,7 +45,7 @@ const Server = ({ serverStatus, getServerStatus, startServer, stopServer, server
         return () => {
             clearInterval(timer.current);
         };
-    }, [setTimeRunning, serverStatus, updateTimeRunning]);
+    }, [setTimeRunning, serverStatus, updateTimeRunning, setLoading]);
 
     return (
         <Row>
@@ -83,34 +87,44 @@ const Server = ({ serverStatus, getServerStatus, startServer, stopServer, server
                         }
 
                         {serverStatus === ServerStatus.RUNNING &&
-                            <Row>
-                                <Col>
-                                    <Table bordered>
-                                        <tbody>
-                                            <tr>
-                                                <td>Server Address</td>
-                                                <td>{serverDetails.publicDnsName}</td>
-                                            </tr>
-                                            <tr>
-                                                <td>ip</td>
-                                                <td>{serverDetails.publicIpAddress}</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Region</td>
-                                                <td>{serverDetails.availabilityZone}</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Started</td>
-                                                <td>{serverStartTime}</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Time Running</td>
-                                                <td>{timeRunning}</td>
-                                            </tr>
-                                        </tbody>
-                                    </Table>
-                                </Col>
-                            </Row>
+                            <>
+                                {loading &&
+                                    <>
+                                        <div>Loading..</div>
+                                    </>
+                                }
+
+                                {!loading &&
+                                    <Row>
+                                        <Col>
+                                            <Table bordered>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>Server Address</td>
+                                                        <td>{serverDetails.publicDnsName}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>ip</td>
+                                                        <td>{serverDetails.publicIpAddress}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Region</td>
+                                                        <td>{serverDetails.availabilityZone}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Started</td>
+                                                        <td>{serverStartTime}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Time Running</td>
+                                                        <td>{timeRunning}</td>
+                                                    </tr>
+                                                </tbody>
+                                            </Table>
+                                        </Col>
+                                    </Row>
+                                }
+                            </>
                         }
                     </div>
                 </div>
