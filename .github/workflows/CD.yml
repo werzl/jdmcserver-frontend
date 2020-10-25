@@ -1,0 +1,28 @@
+name: CD
+
+on:
+  push:
+    branches: master
+
+jobs:
+
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v2
+    
+    - uses: actions/setup-node@v1
+
+    - name: Installation ⏳
+      run: yarn
+   
+    - name: Build 🧱
+      run: yarn build
+    
+    - name: Deploy 🚀
+      uses: JamesIves/github-pages-deploy-action@releases/v3
+      with:
+        ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+        BRANCH: gh-pages
+        FOLDER: build
