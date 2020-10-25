@@ -16,6 +16,6 @@ class ToastHelper {
     static displayInfo(info) {
         toast.info(info);
     }
-};
+}
 
 export default ToastHelper;
