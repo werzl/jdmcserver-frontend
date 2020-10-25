@@ -9,6 +9,7 @@ import "./Server.css";
 
 const Server = ({ serverStatus, getServerStatus, startServer, stopServer, serverDetails }) => {
     const [timeRunning, setTimeRunning] = useState("");
+    const [serverStartTime, setServerStartTime] = useState("");
     const timer = useRef(null);
 
     const toggleServer = () => {
@@ -21,16 +22,13 @@ const Server = ({ serverStatus, getServerStatus, startServer, stopServer, server
     };
 
     const updateTimeRunning = useCallback(() => {
-        let spaceSplit = serverDetails.launchTime.split(" ");
-        let slashSplit = spaceSplit[0].split("/");
-        let launchDateTime = `20${slashSplit[2]}-${slashSplit[1]}-${slashSplit[0]}T${spaceSplit[1]}:${spaceSplit[2]}`;
+        const startTime = new Date(serverDetails.launchTime);
+        const now = new Date();
+        let diff = now.getTime() - startTime.getTime();
 
-        let prevTime = new Date(launchDateTime);
-        let thisTime = new Date();
-        let diff = thisTime.getTime() - prevTime.getTime();
-
+        setServerStartTime(startTime.toGMTString());
         setTimeRunning(new Date(diff).toLocaleTimeString());
-    }, [setTimeRunning, serverDetails]);
+    }, [setServerStartTime, setTimeRunning, serverDetails]);
 
     useEffect(() => {
         if (serverStatus === ServerStatus.RUNNING) {
@@ -103,7 +101,7 @@ const Server = ({ serverStatus, getServerStatus, startServer, stopServer, server
                                             </tr>
                                             <tr>
                                                 <td>Started</td>
-                                                <td>{serverDetails.launchTime}</td>
+                                                <td>{serverStartTime}</td>
                                             </tr>
                                             <tr>
                                                 <td>Time Running</td>
